@@ -1,4 +1,4 @@
-# savedocs_front
+# Kewee IA Dashboard front
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -27,4 +27,4 @@ npm run dev
 ```sh
 npm run build
 ```
-# save_docs_front
+# Kewee IA Dashboard front
