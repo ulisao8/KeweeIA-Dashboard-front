@@ -22,6 +22,15 @@ export const UserService = {
             return false
         }
     },
+    async getAllUsersByAdmin () {
+        return await
+            apiClient.get(`/${ApiConstants.USERS}/admin`, {
+                headers: {
+                    "Content-Type": 'application/json',
+                    "Authorization" : `Bearer ${AuthService.getToken()}`
+                }
+            })
+    },
     async getUsersByAdmin (name) {
         return await
             apiClient.get(`/${ApiConstants.USERS}/myUsers`, {
@@ -33,5 +42,20 @@ export const UserService = {
                     "Authorization" : `Bearer ${AuthService.getToken()}`
                 }
             })
+    },
+    async deleteUser(email) {
+        try {
+            return await
+                apiClient.post(`/${ApiConstants.USERS}/delete`, {
+                    email
+                }, {
+                    headers: {
+                        "Content-Type": 'application/json',
+                        "Authorization" : `Bearer ${AuthService.getToken()}`
+                    }
+                })
+        } catch (e) {
+
+        }
     }
 }

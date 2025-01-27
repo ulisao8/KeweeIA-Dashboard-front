@@ -20,6 +20,12 @@ const routes  = [
         name: ApiConstants.USERS,
         children: [
             {
+                path: 'index',
+                name: ApiConstants.GET_USERS,
+                component: () => import('@/views/users/GetUsersView.vue'),
+                meta: { requiresAuth: true, roles: [RoleConstants.ROLE_ADMIN] }
+            },
+            {
                 path: 'create',
                 name: ApiConstants.CREATE_USERS,
                 component: () => import('@/views/users/CreateUsers.vue'),
