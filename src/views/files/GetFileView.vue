@@ -8,6 +8,7 @@ import ApiConstants from "@/constants/api_constants.js";
 
 const authStore = useAuthStore();
 
+const noFilesMessage = ref("")
 const files = ref([])
 const errorDownloadFile = ref("")
 const errorDeleteFile = ref("")
@@ -24,6 +25,10 @@ const getFiles = async () => {
 
   isLoaded.value = true
   files.value = response.data.data
+
+  if (!files.value.length) {
+    noFilesMessage.value = "No tienes archivos registrados"
+  }
 }
 
 const handleDelete = async (fileName, email) => {
@@ -124,11 +129,11 @@ onMounted(() => getFiles())
       </tbody>
     </table>
   </div>
-  <div v-if="isLoaded && !files.length" class="min-h-screen flex items-center justify-center">
+  <div v-if="isLoaded && noFilesMessage" class="min-h-screen flex items-center justify-center">
     <div class="rounded-lg shadow-lg p-5">
       <div class="flex flex-row items-center space-x-4">
         <span class="text-4xl text-darker">
-          No tienes archivos guardados
+          {{noFilesMessage}}
         </span>
         <svg width="80" height="80" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
 
@@ -152,7 +157,7 @@ onMounted(() => getFiles())
 
         </svg>
       </div>
-      <router-link :to="{name: ApiConstants.FILES_UPLOAD}" class="bg-light hover:bg-light/70 my-5 w-full flex justify-center p-4  rounded-full tracking-wide
+      <router-link v-if="authStore.isAdmin" :to="{name: ApiConstants.FILES_UPLOAD}" class="bg-light hover:bg-light/70 my-5 w-full flex justify-center p-4  rounded-full tracking-wide
         font-semibold focus:outline-none focus:shadow-outline text-darker
         shadow-lg transition ease-in duration-300">
         Subir archivos
